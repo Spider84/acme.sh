@@ -28,8 +28,11 @@ dns_regru_add() {
 
   REGRU_API_URL="${REGRU_API_URL:-$(_readaccountconf_mutable REGRU_API_URL)}"
   if [ -z "$REGRU_API_URL" ]; then
+    _debug "Using default API URL"
     REGRU_API_URL=$REGRU_API_URL_default
   fi
+
+  _debug "API URL: $REGRU_API_URL"
 
   _debug "First detect the root zone"
   if ! _get_root "$fulldomain"; then
