@@ -6,7 +6,7 @@
 # REGRU_API_Password="test"
 #
 
-REGRU_API_URL="https://api.reg.ru/api/regru2"
+REGRU_API_URL_default="https://api.reg.ru/api/regru2"
 
 ########  Public functions #####################
 
@@ -25,6 +25,11 @@ dns_regru_add() {
 
   _saveaccountconf_mutable REGRU_API_Username "$REGRU_API_Username"
   _saveaccountconf_mutable REGRU_API_Password "$REGRU_API_Password"
+
+  REGRU_API_URL="${REGRU_API_URL:-$(_readaccountconf_mutable REGRU_API_URL)}"
+  if [ -z "$REGRU_API_URL" ]; then
+    REGRU_API_URL=$REGRU_API_URL_default
+  fi
 
   _debug "First detect the root zone"
   if ! _get_root "$fulldomain"; then
